@@ -13,6 +13,10 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 add_executable(${PROJECT_NAME}
-        main src/main.cpp)
+        src/main.cpp
+        src/application/Application.cpp
+        src/core/Engine.cpp
+        src/core/VerletObject.cpp
+        src/rendering/Renderer.cpp)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Graphics)
