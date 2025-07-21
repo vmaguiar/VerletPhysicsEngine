@@ -20,10 +20,12 @@ class VerletObject {
 
     // setters
     void setPosition(sf::Vector2f newPosition);
+    void setOldPosition(sf::Vector2f newPosition);
 
     // getters
     sf::Vector2f getPosition() const;
     sf::Vector2f getOldPosition() const;
+    sf::Vector2f getAcceleration() const;
     sf::Color getColor() const;
     float getRadius() const;
 };
