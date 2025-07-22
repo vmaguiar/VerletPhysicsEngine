@@ -12,6 +12,9 @@ class Application {
     Engine m_engine;
     Renderer m_render;
 
+    int m_bolinhaCont = 0;
+    sf::Clock m_spawnTimer;
+
     void handleEvents();
     void update(float dt);
     void render();

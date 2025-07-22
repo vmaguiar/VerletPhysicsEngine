@@ -39,7 +39,7 @@ void Renderer::draw(const std::vector<VerletObject> &objects) {
         m_debugText.setPosition({pos.x + object.getRadius() + 5,
                                 pos.y - object.getRadius() - m_debugText.getGlobalBounds().size.y});
 
-        m_window.draw(m_debugText);
+        // m_window.draw(m_debugText);
 
         sf::CircleShape circle(object.getRadius());
         circle.setOrigin({object.getRadius(), object.getRadius()});

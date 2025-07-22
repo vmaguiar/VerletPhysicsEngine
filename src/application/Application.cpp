@@ -8,7 +8,9 @@ Application::Application(): m_engine(), m_render(m_window) {
     m_window.create(sf::VideoMode({1000, 800}), "Balls of Verlet", sf::State::Windowed, settings);
     m_window.setFramerateLimit(60);
 
-    addInitialObjects();
+    m_spawnTimer.restart();
+
+    // addInitialObjects();
 }
 
 void Application::run() {
@@ -41,6 +43,11 @@ void Application::handleEvents() {
 
 
 void Application::update(float dt) {
+    if (m_spawnTimer.getElapsedTime().asSeconds() >= 1.0f && m_bolinhaCont < 10) {
+        m_engine.addObject(VerletObject(sf::Vector2f(300.0f, 85.0f), 15.0f, sf::Color::Red));
+        m_spawnTimer.restart();
+        m_bolinhaCont++;
+    }
     m_engine.update(dt);
 }
 
