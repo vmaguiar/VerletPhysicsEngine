@@ -11,7 +11,9 @@
 
 class Renderer {
     sf::RenderWindow &m_window;
+    sf::Font m_font;
+    sf::Text m_debugText;
     public:
-    Renderer(sf::RenderWindow &window);
+    explicit Renderer(sf::RenderWindow &window);
     void draw(const std::vector<VerletObject>& objects);
 };

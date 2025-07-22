@@ -15,7 +15,7 @@ class VerletObject {
 
     public:
     VerletObject(sf::Vector2f position, float radius, sf::Color color);
-    void update(float passagemDeTempoEntreFrame);
+    void update(float dt);
     void applyForce(sf::Vector2f force);
 
     // setters

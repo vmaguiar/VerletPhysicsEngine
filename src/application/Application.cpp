@@ -5,7 +5,7 @@
 Application::Application(): m_engine(), m_render(m_window) {
     sf::ContextSettings settings;
     settings.antiAliasingLevel = 8;
-    m_window.create(sf::VideoMode({1920, 1080}), "Balls of Verlet", sf::State::Fullscreen, settings);
+    m_window.create(sf::VideoMode({1000, 800}), "Balls of Verlet", sf::State::Windowed, settings);
     m_window.setFramerateLimit(60);
 
     addInitialObjects();
@@ -45,19 +45,20 @@ void Application::update(float dt) {
 }
 
 void Application::render() {
-    m_window.clear();
+    m_window.clear(sf::Color::White);
+    // m_window.clear();
     m_render.draw(m_engine.getObjects());
     m_window.display();
 }
 
 void Application::addInitialObjects() {
     // Hardcodando as bolinhas aqui
-    m_engine.addObject(VerletObject(sf::Vector2f(100.0f, 100.0f), 15.0f, sf::Color::Red));
-    m_engine.addObject(VerletObject(sf::Vector2f(130.0f, 100.0f), 15.0f, sf::Color::Green));
-    m_engine.addObject(VerletObject(sf::Vector2f(160.0f, 100.0f), 15.0f, sf::Color::Blue));
-    m_engine.addObject(VerletObject(sf::Vector2f(190.0f, 100.0f), 15.0f, sf::Color::Yellow));
-    // m_engine.addObject(VerletObject(sf::Vector2f(100.0f, 130.0f), 15.0f, sf::Color::Yellow));
-    // m_engine.addObject(VerletObject(sf::Vector2f(130.0f, 130.0f), 15.0f, sf::Color::Blue));
-    // m_engine.addObject(VerletObject(sf::Vector2f(160.0f, 130.0f), 15.0f, sf::Color::Green));
-    // m_engine.addObject(VerletObject(sf::Vector2f(190.0f, 130.0f), 15.0f, sf::Color::Red));
+    m_engine.addObject(VerletObject(sf::Vector2f(300.0f, 85.0f), 15.0f, sf::Color::Red));
+    m_engine.addObject(VerletObject(sf::Vector2f(250.0f, 200.0f), 15.0f, sf::Color::Green));
+    m_engine.addObject(VerletObject(sf::Vector2f(260.0f, 200.0f), 15.0f, sf::Color::Blue));
+    m_engine.addObject(VerletObject(sf::Vector2f(290.0f, 200.0f), 15.0f, sf::Color::Yellow));
+    m_engine.addObject(VerletObject(sf::Vector2f(200.0f, 190.0f), 15.0f, sf::Color::Yellow));
+    m_engine.addObject(VerletObject(sf::Vector2f(230.0f, 130.0f), 15.0f, sf::Color::Blue));
+    m_engine.addObject(VerletObject(sf::Vector2f(260.0f, 195.0f), 15.0f, sf::Color::Green));
+    m_engine.addObject(VerletObject(sf::Vector2f(200.0f, 170.0f), 15.0f, sf::Color::Red));
 }

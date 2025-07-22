@@ -1,58 +1,35 @@
 #include "Engine.hpp"
 
 #include <iostream>
-
-#include "SFML/Audio/Listener.hpp"
+#include <cmath>
 
 // private methods
 void Engine::applyGravity() {
-    constexpr float GRAVITY_X = 0.0f;
-    constexpr float GRAVITY_Y = 100.0f; // ajeitar nas constantes
-
     for (VerletObject &object : m_objects) {
-        object.applyForce(sf::Vector2f(GRAVITY_X, GRAVITY_Y));
+        constexpr sf::Vector2f GRAVITY = {0.0f, 100.0f};
+        object.applyForce(GRAVITY);
     }
 }
 
 void Engine::applyConstraints() {
-    // primeiro fazer as restrições de tela para nao passar da janela
+    constexpr float WINDOW_WIDTH = 1000.0f;
+    constexpr float WINDOW_HEIGHT = 800.0f;
+
+    // circulo
+    float circleConstraintRadius = 400.0f;
+    sf::CircleShape circleConstraint(circleConstraintRadius);
+    circleConstraint.setOrigin({circleConstraintRadius, circleConstraintRadius});
+    circleConstraint.setPosition(sf::Vector2f(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f));
+
+
     for (VerletObject &object : m_objects) {
-        sf::Vector2f pos = object.getPosition();
-        sf::Vector2f oldPos = object.getOldPosition();
-        float radius = object.getRadius();
-        constexpr float BOUCINESS = 1.0f; // ajeitar depois
-
-        // se posição do obj.x + raio > width da tela => colidiu com a direita da janela
-        // se pos do obj.x - raio < 0 => colidiu com a esquerda da janela
-        // se pos do obj.y + raio > height da tela => colidiu parte de baixo da janela
-        // se pos do obj.y - raio < 0 => colidiu parte de cima janela
-        if (pos.x + radius >= 1920.0f) {
-            pos.x = 1080.0f - radius;
-            oldPos.x = pos.x + (pos.x - oldPos.x) * BOUCINESS;
+        sf::Vector2f toObj = object.getPosition() - circleConstraint.getPosition();
+        float distHipotenusa = std::sqrt(toObj.x * toObj.x + toObj.y * toObj.y);
+        if (distHipotenusa > (circleConstraintRadius - object.getRadius())) {
+            sf::Vector2f normalVectToObj = toObj/distHipotenusa;
+            sf::Vector2f pos = circleConstraint.getPosition() + normalVectToObj * (circleConstraintRadius - object.getRadius());
+            object.setPosition(pos);
         }
-        if (pos.x - radius <= 0) {
-            pos.x = 0 + radius;
-            oldPos.x = pos.x + (pos.x - oldPos.x) * BOUCINESS;
-        }
-        if (pos.y + radius >= 1080.0f) {
-            // resolver colisão -> inverte a velocidade no eixo que houve colisao
-            //primeiro evitamos que a bolinha fiquei presa e fazemos ela ficar colada na parede
-            // depois vamos inverter (no eixo certo) a "velocidade", no caso (P' - oldP') tem que ser inverso a (P - oldP)
-            // mas so podemos mudar oldP', entao isola OldP' -> P' -oldP' = -P + oldP
-            // oldP' = P + P' -oldP
-            //P' é posição apos se reposicionado
-            // P - oldP é "velocidade" antes do rebote
-            // oldP' é o valor para velocidade ser invertida
-            pos.y = 1080.0f - radius; // reposicionando na borda
-            oldPos.y = pos.y + (pos.y - oldPos.y) * BOUCINESS;
-        }
-        if (pos.y - radius <= 0) {
-            pos.y = 0 + radius;
-            oldPos.y = pos.y + (pos.y - oldPos.y) * BOUCINESS;
-        }
-
-        object.setPosition(pos);
-        object.setOldPosition(oldPos);
     }
 }
 void Engine::solveCollisions() {
@@ -101,15 +78,15 @@ void Engine::addObject(VerletObject object) {
 }
 
 void Engine::update(float dt) {
-    constexpr int SUB_STEPS = 16;
+    constexpr int SUB_STEPS = 1;
     float subDeltaTime = dt / static_cast<float>(SUB_STEPS); //ajustar aqui os sub passos
 
+    applyGravity();
     for (int i = 0; i < SUB_STEPS; i++) {
-        applyGravity();
         applyConstraints();
-        solveCollisions();
-        updatePositions(subDeltaTime);
+        // solveCollisions();
     }
+    updatePositions(dt);
 }
 
 const std::vector<VerletObject>& Engine::getObjects() const {
