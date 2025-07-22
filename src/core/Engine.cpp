@@ -34,32 +34,25 @@ void Engine::applyConstraints() {
 }
 void Engine::solveCollisions() {
     // Lógica de colisão entre bolinhas (muito importante para Verlet)
-    // for (size_t i = 0; i < m_objects.size(); ++i) {
-    //     for (size_t j = i + 1; j < m_objects.size(); ++j) {
-    //         VerletObject& obj1 = m_objects[i];
-    //         VerletObject& obj2 = m_objects[j];
-    //
-    //         sf::Vector2f axis = obj1.getPosition() - obj2.getPosition();
-    //         float dist = std::sqrt(axis.x * axis.x + axis.y * axis.y); // Distância entre os centros
-    //
-    //         float minDistance = obj1.getRadius() + obj2.getRadius();
-    //
-    //         if (dist < minDistance) {
-    //             // Colisão detectada!
-    //             // Calcular a direção e magnitude da sobreposição
-    //             float overlap = minDistance - dist;
-    //             sf::Vector2f normal = axis / dist; // Vetor normalizado da colisão
-    //
-    //             // Mover os objetos para fora da sobreposição
-    //             obj1.setPosition(obj1.getPosition() + normal * (overlap * 0.5f));
-    //             obj2.setPosition(obj2.getPosition() - normal * (overlap * 0.5f));
-    //
-    //             // Opcional: Adicionar um pequeno "amortecimento" para a colisão (evita vibrações)
-    //             // Isso é geralmente feito ao ajustar o m_oldPosition de cada objeto.
-    //             // Mas por enquanto, a fricção global já ajuda a estabilizar.
-    //         }
-    //     }
-    // }
+    for (size_t i = 0; i < m_objects.size(); i++) {
+        for (size_t j = i + 1; j < m_objects.size(); j++) {
+            VerletObject &obj1 = m_objects[i];
+            VerletObject &obj2 = m_objects[j];
+
+            sf::Vector2f collisionAxis = obj1.getPosition() - obj2.getPosition();
+            float distHip = std::sqrt(collisionAxis.x * collisionAxis.x + collisionAxis.y * collisionAxis.y);
+
+            float minDistance = obj1.getRadius() + obj2.getRadius();
+            if (distHip < minDistance) {
+                //Colidiu
+                float overlap = minDistance - distHip;
+                sf::Vector2f normalCollisionDirVect = collisionAxis / distHip;
+
+                obj1.setPosition(obj1.getPosition() + normalCollisionDirVect * overlap * 0.5f);
+                obj2.setPosition(obj2.getPosition() - normalCollisionDirVect * overlap * 0.5f);
+            }
+        }
+    }
 }
 
 
@@ -84,7 +77,7 @@ void Engine::update(float dt) {
     applyGravity();
     for (int i = 0; i < SUB_STEPS; i++) {
         applyConstraints();
-        // solveCollisions();
+        solveCollisions();
     }
     updatePositions(dt);
 }
