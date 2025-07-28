@@ -9,8 +9,10 @@ m_position(position), m_oldPosition(position), m_acceleration({0.0f, 0.0f}){
 
 void VerletObject::update(float dt) {
     // constexpr float FRICTION = 1.0f; // ajeitar depois
+
     sf::Vector2f velocity = m_position - m_oldPosition;
     // velocity = velocity * FRICTION;
+
     m_oldPosition = m_position;
 
     // Nova posição = Posição atual + Velocidade + Aceleração * dt*dt

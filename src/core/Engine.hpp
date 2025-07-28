@@ -1,5 +1,6 @@
 #pragma once
 #include "VerletObject.hpp"
+#include "../core/configConsts.hpp"
 
 class Engine {
     std::vector<VerletObject> m_objects;

@@ -5,8 +5,8 @@
 Application::Application(): m_engine(), m_render(m_window) {
     sf::ContextSettings settings;
     settings.antiAliasingLevel = 8;
-    m_window.create(sf::VideoMode({1000, 800}), "Balls of Verlet", sf::State::Windowed, settings);
-    m_window.setFramerateLimit(60);
+    m_window.create(sf::VideoMode({configConsts::WINDOW_WIDTH, configConsts::WINDOW_HEIGHT}), "Balls of Verlet", sf::State::Windowed, settings);
+    m_window.setFramerateLimit(configConsts::MAX_FPS);
 
     m_spawnTimer.restart();
 
@@ -43,8 +43,8 @@ void Application::handleEvents() {
 
 
 void Application::update(float dt) {
-    if (m_spawnTimer.getElapsedTime().asSeconds() >= 1.0f && m_bolinhaCont < 10) {
-        m_engine.addObject(VerletObject(sf::Vector2f(300.0f, 85.0f), 15.0f, sf::Color::Red));
+    if (m_spawnTimer.getElapsedTime().asSeconds() >= configConsts::SPAWN_INTERVAL_SECONDS && m_bolinhaCont < configConsts::MAX_SPAWNED_OBJECTS) {
+        m_engine.addObject(VerletObject(sf::Vector2f(400.0f, 105.0f), 15.0f, sf::Color::Red));
         m_spawnTimer.restart();
         m_bolinhaCont++;
     }

@@ -6,20 +6,16 @@
 // private methods
 void Engine::applyGravity() {
     for (VerletObject &object : m_objects) {
-        constexpr sf::Vector2f GRAVITY = {0.0f, 100.0f};
-        object.applyForce(GRAVITY);
+        object.applyForce(configConsts::GRAVITY_FORCE);
     }
 }
 
 void Engine::applyConstraints() {
-    constexpr float WINDOW_WIDTH = 1000.0f;
-    constexpr float WINDOW_HEIGHT = 800.0f;
-
     // circulo
     float circleConstraintRadius = 400.0f;
     sf::CircleShape circleConstraint(circleConstraintRadius);
     circleConstraint.setOrigin({circleConstraintRadius, circleConstraintRadius});
-    circleConstraint.setPosition(sf::Vector2f(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f));
+    circleConstraint.setPosition(sf::Vector2f(configConsts::WINDOW_WIDTH_F * 0.5f, configConsts::WINDOW_HEIGHT_F * 0.5f));
 
 
     for (VerletObject &object : m_objects) {
@@ -71,11 +67,10 @@ void Engine::addObject(VerletObject object) {
 }
 
 void Engine::update(float dt) {
-    constexpr int SUB_STEPS = 1;
-    float subDeltaTime = dt / static_cast<float>(SUB_STEPS); //ajustar aqui os sub passos
+    // float subDeltaTime = dt / static_cast<float>(configConsts::SUB_STEPS);
 
     applyGravity();
-    for (int i = 0; i < SUB_STEPS; i++) {
+    for (int i = 0; i < configConsts::SUB_STEPS; i++) {
         applyConstraints();
         solveCollisions();
     }

@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "../core/configConsts.hpp"
 #include "../core/Engine.hpp"
 #include "../rendering/Renderer.hpp"
 
