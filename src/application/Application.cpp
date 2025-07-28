@@ -2,13 +2,18 @@
 
 #include <iostream>
 
-Application::Application(): m_engine(), m_render(m_window) {
+#include "../constraints/CircleConstraint.hpp"
+
+Application::Application(): m_render(m_window) {
     sf::ContextSettings settings;
     settings.antiAliasingLevel = 8;
     m_window.create(sf::VideoMode({configConsts::WINDOW_WIDTH, configConsts::WINDOW_HEIGHT}), "Balls of Verlet", sf::State::Windowed, settings);
     m_window.setFramerateLimit(configConsts::MAX_FPS);
 
     m_spawnTimer.restart();
+
+    m_engine.addConstraint(std::make_unique<CircleConstraint>(sf::Vector2f(configConsts::WINDOW_WIDTH_F * 0.5f, configConsts::WINDOW_HEIGHT_F * 0.5f),
+        configConsts::CIRCLE_CONSTRAINT_RADIUS));
 
     // addInitialObjects();
 }
@@ -44,7 +49,7 @@ void Application::handleEvents() {
 
 void Application::update(float dt) {
     if (m_spawnTimer.getElapsedTime().asSeconds() >= configConsts::SPAWN_INTERVAL_SECONDS && m_bolinhaCont < configConsts::MAX_SPAWNED_OBJECTS) {
-        m_engine.addObject(VerletObject(sf::Vector2f(400.0f, 105.0f), 15.0f, sf::Color::Red));
+        m_engine.addObject(VerletObject(sf::Vector2f(380.0f, 260.0f), 15.0f, sf::Color::Red));
         m_spawnTimer.restart();
         m_bolinhaCont++;
     }

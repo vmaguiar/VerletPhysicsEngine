@@ -1,6 +1,8 @@
 #include "Renderer.hpp"
 #include <iostream>
 
+#include "../core/configConsts.hpp"
+
 Renderer::Renderer(sf::RenderWindow &window):m_window(window), m_debugText(m_font, "", 13) {
     if (!m_font.openFromFile("assets/fonts/PressStart2P-Regular.ttf")) {
         std::cerr << "Error to load the Game font!" << std::endl;
@@ -10,10 +12,10 @@ Renderer::Renderer(sf::RenderWindow &window):m_window(window), m_debugText(m_fon
 
 
 void Renderer::draw(const std::vector<VerletObject> &objects) {
-    sf::CircleShape circleConstraint(400);
-    circleConstraint.setOrigin({400, 400});
+    sf::CircleShape circleConstraint(configConsts::CIRCLE_CONSTRAINT_RADIUS);
+    circleConstraint.setOrigin({configConsts::CIRCLE_CONSTRAINT_RADIUS, configConsts::CIRCLE_CONSTRAINT_RADIUS});
     circleConstraint.setFillColor(sf::Color::Black);
-    circleConstraint.setPosition(sf::Vector2f(500.0f, 400.0f));
+    circleConstraint.setPosition(sf::Vector2f(configConsts::WINDOW_WIDTH * 0.5f, configConsts::WINDOW_HEIGHT * 0.5f));
     m_window.draw(circleConstraint);
 
     for (size_t i = 0; i < objects.size(); i++) {

@@ -15,6 +15,7 @@ FetchContent_MakeAvailable(SFML)
 add_executable(${PROJECT_NAME}
         src/main.cpp
         src/application/Application.cpp
+        src/constraints/CircleConstraint.cpp
         src/core/Engine.cpp
         src/core/VerletObject.cpp
         src/rendering/Renderer.cpp)

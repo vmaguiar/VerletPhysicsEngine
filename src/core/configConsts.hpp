@@ -17,7 +17,7 @@ namespace configConsts {
     constexpr float STICKY_THRESHOLD = 0.01f; // Limiar para evitar que objetos grudem nas restrições
 
     // Environment Constrains
-    constexpr float CIRCLE_CONSTRAINT_RADIUS = 300.0f;
+    constexpr float CIRCLE_CONSTRAINT_RADIUS = 325.0f;
 
     // Verlet Objects
     constexpr float VERLET_BALL_RADIUS = 15.0f;

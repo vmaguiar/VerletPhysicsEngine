@@ -71,11 +71,19 @@ void Engine::update(float dt) {
 
     applyGravity();
     for (int i = 0; i < configConsts::SUB_STEPS; i++) {
-        applyConstraints();
+        // applyConstraints();
+        for (std::unique_ptr<Constraint> &constraint: m_constraints) {
+            constraint->apply(m_objects);
+        }
         solveCollisions();
     }
     updatePositions(dt);
 }
+
+void Engine::addConstraint(std::unique_ptr<Constraint> constraint) {
+    m_constraints.emplace_back(std::move(constraint));
+}
+
 
 const std::vector<VerletObject>& Engine::getObjects() const {
     return m_objects;
