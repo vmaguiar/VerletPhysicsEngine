@@ -7,6 +7,7 @@
 
 class VerletObject {
     float m_radius;
+    float m_mass = 1.0f;
     sf::Color m_color;
 
     sf::Vector2f m_position;
@@ -14,7 +15,7 @@ class VerletObject {
     sf::Vector2f m_acceleration;
 
     public:
-    VerletObject(sf::Vector2f position, float radius, sf::Color color);
+    VerletObject(sf::Vector2f position, sf::Vector2f oldPosition, float radius, sf::Color color);
     void update(float dt);
     void applyForce(sf::Vector2f force);
 
@@ -28,4 +29,5 @@ class VerletObject {
     sf::Vector2f getAcceleration() const;
     sf::Color getColor() const;
     float getRadius() const;
+    float getMass() const;
 };

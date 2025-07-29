@@ -10,7 +10,7 @@ namespace configConsts {
     constexpr int MAX_FPS = 60;
 
     // Physics Config
-    constexpr int SUB_STEPS = 1;
+    constexpr int SUB_STEPS = 8;
     constexpr sf::Vector2f GRAVITY_FORCE = {0.0f, 100.0f};
     constexpr float FRICTION = 1.0f; // 0.0 - 1.0
     constexpr float COLLISION_DAMPING = 1.0f; // 0.0 - 1.0

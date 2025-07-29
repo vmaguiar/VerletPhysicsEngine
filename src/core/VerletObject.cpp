@@ -2,9 +2,8 @@
 #include <iostream>
 
 
-VerletObject::VerletObject(sf::Vector2f position, float radius, sf::Color color):m_radius(radius), m_color(color),
-m_position(position), m_oldPosition(position), m_acceleration({0.0f, 0.0f}){
-
+VerletObject::VerletObject(sf::Vector2f position, sf::Vector2f oldPosition, float radius, sf::Color color):m_radius(radius), m_color(color),
+m_position(position), m_oldPosition(oldPosition), m_acceleration({0.0f, 0.0f}){
 }
 
 void VerletObject::update(float dt) {
@@ -54,4 +53,8 @@ sf::Color VerletObject::getColor() const {
 
 float VerletObject::getRadius() const {
     return m_radius;
+}
+
+float VerletObject::getMass() const {
+    return m_mass;
 }

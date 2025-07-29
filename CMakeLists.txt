@@ -18,7 +18,8 @@ add_executable(${PROJECT_NAME}
         src/constraints/CircleConstraint.cpp
         src/core/Engine.cpp
         src/core/VerletObject.cpp
-        src/rendering/Renderer.cpp)
+        src/rendering/Renderer.cpp
+        src/utils/physicsUtils.cpp)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Graphics)
 

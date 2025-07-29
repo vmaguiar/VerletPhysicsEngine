@@ -20,4 +20,5 @@ class Engine {
     void update(float dt);
     void addConstraint(std::unique_ptr<Constraint> constraint);
     const std::vector<VerletObject>& getObjects() const; // pega uma referencia constante do vector de obj para desenhar ou interagir
+    float calculateTotalSistemKineticEnergy() const;
 };
