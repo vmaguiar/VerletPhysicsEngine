@@ -1,7 +1,5 @@
 #include "Application.hpp"
-
 #include <iostream>
-
 #include "../constraints/CircleConstraint.hpp"
 
 Application::Application(): m_render(m_window) {
@@ -49,7 +47,9 @@ void Application::handleEvents() {
 
 void Application::update(float dt) {
     if (m_spawnTimer.getElapsedTime().asSeconds() >= configConsts::SPAWN_INTERVAL_SECONDS && m_bolinhaCont < configConsts::MAX_SPAWNED_OBJECTS) {
-        m_engine.addObject(VerletObject(sf::Vector2f(380.0f, 260.0f), 15.0f, sf::Color::Red));
+        // Meio = 640, 360 - maxX = 965 - raio da bolinha, maxY = 685 - raio da bolinha
+        m_engine.addObject(VerletObject(sf::Vector2f(340.0f, 360.0f), sf::Vector2f(340.0f, 363.0f), configConsts::VERLET_BALL_RADIUS, sf::Color::Red));
+        // m_engine.addObject(VerletObject(sf::Vector2f(640.0f, 500.0f), sf::Vector2f(640.0f, 505.0f), configConsts::VERLET_BALL_RADIUS, sf::Color::Yellow));
         m_spawnTimer.restart();
         m_bolinhaCont++;
     }
@@ -65,12 +65,12 @@ void Application::render() {
 
 void Application::addInitialObjects() {
     // Hardcodando as bolinhas aqui
-    m_engine.addObject(VerletObject(sf::Vector2f(300.0f, 85.0f), 15.0f, sf::Color::Red));
-    m_engine.addObject(VerletObject(sf::Vector2f(250.0f, 200.0f), 15.0f, sf::Color::Green));
-    m_engine.addObject(VerletObject(sf::Vector2f(260.0f, 200.0f), 15.0f, sf::Color::Blue));
-    m_engine.addObject(VerletObject(sf::Vector2f(290.0f, 200.0f), 15.0f, sf::Color::Yellow));
-    m_engine.addObject(VerletObject(sf::Vector2f(200.0f, 190.0f), 15.0f, sf::Color::Yellow));
-    m_engine.addObject(VerletObject(sf::Vector2f(230.0f, 130.0f), 15.0f, sf::Color::Blue));
-    m_engine.addObject(VerletObject(sf::Vector2f(260.0f, 195.0f), 15.0f, sf::Color::Green));
-    m_engine.addObject(VerletObject(sf::Vector2f(200.0f, 170.0f), 15.0f, sf::Color::Red));
+    // m_engine.addObject(VerletObject(sf::Vector2f(300.0f, 85.0f), 15.0f, sf::Color::Red));
+    // m_engine.addObject(VerletObject(sf::Vector2f(250.0f, 200.0f), 15.0f, sf::Color::Green));
+    // m_engine.addObject(VerletObject(sf::Vector2f(260.0f, 200.0f), 15.0f, sf::Color::Blue));
+    // m_engine.addObject(VerletObject(sf::Vector2f(290.0f, 200.0f), 15.0f, sf::Color::Yellow));
+    // m_engine.addObject(VerletObject(sf::Vector2f(200.0f, 190.0f), 15.0f, sf::Color::Yellow));
+    // m_engine.addObject(VerletObject(sf::Vector2f(230.0f, 130.0f), 15.0f, sf::Color::Blue));
+    // m_engine.addObject(VerletObject(sf::Vector2f(260.0f, 195.0f), 15.0f, sf::Color::Green));
+    // m_engine.addObject(VerletObject(sf::Vector2f(200.0f, 170.0f), 15.0f, sf::Color::Red));
 }
